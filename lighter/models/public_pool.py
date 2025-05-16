@@ -42,7 +42,7 @@ class PublicPool(BaseModel):
     description: StrictStr
     can_invite: StrictBool
     referral_points_percentage: StrictStr
-    max_referral_usage_limit: StrictInt
+    max_referral_usage_limit: Optional[StrictInt]
     total_asset_value: StrictStr
     pool_info: PublicPoolInfo
     account_share: Optional[PublicPoolShare] = None

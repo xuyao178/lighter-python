@@ -43,7 +43,7 @@ class DetailedAccount(BaseModel):
     description: StrictStr
     can_invite: StrictBool
     referral_points_percentage: StrictStr
-    max_referral_usage_limit: StrictInt
+    max_referral_usage_limit: Optional[StrictInt]
     positions: List[AccountPosition]
     total_asset_value: StrictStr
     pool_info: PublicPoolInfo
