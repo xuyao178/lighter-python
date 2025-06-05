@@ -4,12 +4,10 @@ All URIs are relative to *https://mainnet.zklighter.elliot.ai*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**account_pending_txs**](TransactionApi.md#account_pending_txs) | **GET** /api/v1/accountPendingTxs | accountPendingTxs
 [**account_txs**](TransactionApi.md#account_txs) | **GET** /api/v1/accountTxs | accountTxs
 [**block_txs**](TransactionApi.md#block_txs) | **GET** /api/v1/blockTxs | blockTxs
 [**deposit_history**](TransactionApi.md#deposit_history) | **GET** /api/v1/deposit/history | deposit_history
 [**next_nonce**](TransactionApi.md#next_nonce) | **GET** /api/v1/nextNonce | nextNonce
-[**pending_txs**](TransactionApi.md#pending_txs) | **GET** /api/v1/pendingTxs | pendingTxs
 [**send_tx**](TransactionApi.md#send_tx) | **POST** /api/v1/sendTx | sendTx
 [**send_tx_batch**](TransactionApi.md#send_tx_batch) | **POST** /api/v1/sendTxBatch | sendTxBatch
 [**tx**](TransactionApi.md#tx) | **GET** /api/v1/tx | tx
@@ -17,79 +15,6 @@ Method | HTTP request | Description
 [**txs**](TransactionApi.md#txs) | **GET** /api/v1/txs | txs
 [**withdraw_history**](TransactionApi.md#withdraw_history) | **GET** /api/v1/withdraw/history | withdraw_history
 
-
-# **account_pending_txs**
-> Txs account_pending_txs(by, value, types=types)
-
-accountPendingTxs
-
-Get pending transactions of a specific account
-
-### Example
-
-
-```python
-import lighter
-from lighter.models.txs import Txs
-from lighter.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
-# See configuration.py for a list of all supported configuration parameters.
-configuration = lighter.Configuration(
-    host = "https://mainnet.zklighter.elliot.ai"
-)
-
-
-# Enter a context with an instance of the API client
-async with lighter.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = lighter.TransactionApi(api_client)
-    by = 'by_example' # str | 
-    value = 'value_example' # str | 
-    types = [56] # List[int] |  (optional)
-
-    try:
-        # accountPendingTxs
-        api_response = await api_instance.account_pending_txs(by, value, types=types)
-        print("The response of TransactionApi->account_pending_txs:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling TransactionApi->account_pending_txs: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **by** | **str**|  | 
- **value** | **str**|  | 
- **types** | [**List[int]**](int.md)|  | [optional] 
-
-### Return type
-
-[**Txs**](Txs.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A successful response. |  -  |
-**400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **account_txs**
 > Txs account_txs(limit, by, value, index=index, types=types)
@@ -240,7 +165,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deposit_history**
-> DepositHistory deposit_history(l1_address, cursor=cursor, filter=filter)
+> DepositHistory deposit_history(account_index, l1_address, authorization=authorization, auth=auth, cursor=cursor, filter=filter)
 
 deposit_history
 
@@ -266,13 +191,16 @@ configuration = lighter.Configuration(
 async with lighter.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lighter.TransactionApi(api_client)
+    account_index = 56 # int | 
     l1_address = 'l1_address_example' # str | 
+    authorization = 'authorization_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     cursor = 'cursor_example' # str |  (optional)
     filter = 'filter_example' # str |  (optional)
 
     try:
         # deposit_history
-        api_response = await api_instance.deposit_history(l1_address, cursor=cursor, filter=filter)
+        api_response = await api_instance.deposit_history(account_index, l1_address, authorization=authorization, auth=auth, cursor=cursor, filter=filter)
         print("The response of TransactionApi->deposit_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -286,7 +214,10 @@ async with lighter.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **account_index** | **int**|  | 
  **l1_address** | **str**|  | 
+ **authorization** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
  **cursor** | **str**|  | [optional] 
  **filter** | **str**|  | [optional] 
 
@@ -317,7 +248,7 @@ No authorization required
 
 nextNonce
 
-Get next nonce for a specific account
+Get next nonce for a specific account and api key
 
 ### Example
 
@@ -364,77 +295,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**NextNonce**](NextNonce.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A successful response. |  -  |
-**400** | Bad request |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **pending_txs**
-> Txs pending_txs(limit, index=index)
-
-pendingTxs
-
-Get pending transactions
-
-### Example
-
-
-```python
-import lighter
-from lighter.models.txs import Txs
-from lighter.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://mainnet.zklighter.elliot.ai
-# See configuration.py for a list of all supported configuration parameters.
-configuration = lighter.Configuration(
-    host = "https://mainnet.zklighter.elliot.ai"
-)
-
-
-# Enter a context with an instance of the API client
-async with lighter.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = lighter.TransactionApi(api_client)
-    limit = 56 # int | 
-    index = 56 # int |  (optional)
-
-    try:
-        # pendingTxs
-        api_response = await api_instance.pending_txs(limit, index=index)
-        print("The response of TransactionApi->pending_txs:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling TransactionApi->pending_txs: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | 
- **index** | **int**|  | [optional] 
-
-### Return type
-
-[**Txs**](Txs.md)
 
 ### Authorization
 
@@ -810,7 +670,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **withdraw_history**
-> WithdrawHistory withdraw_history(account_index, cursor=cursor, filter=filter)
+> WithdrawHistory withdraw_history(account_index, authorizatio=authorizatio, auth=auth, cursor=cursor, filter=filter)
 
 withdraw_history
 
@@ -837,12 +697,14 @@ async with lighter.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lighter.TransactionApi(api_client)
     account_index = 56 # int | 
+    authorizatio = 'authorizatio_example' # str |  make required after integ is done (optional)
+    auth = 'auth_example' # str |  made optional to support header auth clients (optional)
     cursor = 'cursor_example' # str |  (optional)
     filter = 'filter_example' # str |  (optional)
 
     try:
         # withdraw_history
-        api_response = await api_instance.withdraw_history(account_index, cursor=cursor, filter=filter)
+        api_response = await api_instance.withdraw_history(account_index, authorizatio=authorizatio, auth=auth, cursor=cursor, filter=filter)
         print("The response of TransactionApi->withdraw_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -857,6 +719,8 @@ async with lighter.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_index** | **int**|  | 
+ **authorizatio** | **str**|  make required after integ is done | [optional] 
+ **auth** | **str**|  made optional to support header auth clients | [optional] 
  **cursor** | **str**|  | [optional] 
  **filter** | **str**|  | [optional] 
 

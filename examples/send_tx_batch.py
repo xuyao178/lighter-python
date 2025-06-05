@@ -8,8 +8,8 @@ logging.basicConfig(level=logging.DEBUG)
 # The API_KEY_PRIVATE_KEY provided belongs to a dummy account registered on Testnet.
 # It was generated using the setup_system.py script, and servers as an example.
 BASE_URL = "https://testnet.zklighter.elliot.ai"
-API_KEY_PRIVATE_KEY = "0xc0a06468a5bbc9a7b785065a8b227a37fdfa18e2b81d51b018cb03ddd99bfbef4b7551f0f0765639"
-ACCOUNT_INDEX = 595
+API_KEY_PRIVATE_KEY = "0xed636277f3753b6c0275f7a28c2678a7f3a95655e09deaebec15179b50c5da7f903152e50f594f7b"
+ACCOUNT_INDEX = 65
 API_KEY_INDEX = 1
 
 def trim_exception(e: Exception) -> str:
@@ -44,7 +44,7 @@ async def main():
         market_index=0,
         client_order_index=1001,  # Unique identifier for this order
         base_amount=100000,
-        price=300000,
+        price=280000,
         is_ask=True,
         order_type=client.ORDER_TYPE_LIMIT,
         time_in_force=client.ORDER_TIME_IN_FORCE_GOOD_TILL_TIME,
@@ -63,7 +63,7 @@ async def main():
         market_index=0,
         client_order_index=1002,  # Different unique identifier
         base_amount=200000,
-        price=51000,
+        price=200000,
         is_ask=False,
         order_type=client.ORDER_TYPE_LIMIT,
         time_in_force=client.ORDER_TIME_IN_FORCE_GOOD_TILL_TIME,

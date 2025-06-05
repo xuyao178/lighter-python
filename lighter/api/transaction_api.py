@@ -661,8 +661,9 @@ class TransactionApi:
     async def deposit_history(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
         l1_address: StrictStr,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -684,10 +685,12 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
-        :type auth: str
         :param l1_address: (required)
         :type l1_address: str
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param cursor:
         :type cursor: str
         :param filter:
@@ -716,8 +719,9 @@ class TransactionApi:
 
         _param = self._deposit_history_serialize(
             account_index=account_index,
-            auth=auth,
             l1_address=l1_address,
+            authorization=authorization,
+            auth=auth,
             cursor=cursor,
             filter=filter,
             _request_auth=_request_auth,
@@ -745,8 +749,9 @@ class TransactionApi:
     async def deposit_history_with_http_info(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
         l1_address: StrictStr,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -768,10 +773,12 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
-        :type auth: str
         :param l1_address: (required)
         :type l1_address: str
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param cursor:
         :type cursor: str
         :param filter:
@@ -800,8 +807,9 @@ class TransactionApi:
 
         _param = self._deposit_history_serialize(
             account_index=account_index,
-            auth=auth,
             l1_address=l1_address,
+            authorization=authorization,
+            auth=auth,
             cursor=cursor,
             filter=filter,
             _request_auth=_request_auth,
@@ -829,8 +837,9 @@ class TransactionApi:
     async def deposit_history_without_preload_content(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
         l1_address: StrictStr,
+        authorization: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -852,10 +861,12 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
-        :type auth: str
         :param l1_address: (required)
         :type l1_address: str
+        :param authorization:  make required after integ is done
+        :type authorization: str
+        :param auth:  made optional to support header auth clients
+        :type auth: str
         :param cursor:
         :type cursor: str
         :param filter:
@@ -884,8 +895,9 @@ class TransactionApi:
 
         _param = self._deposit_history_serialize(
             account_index=account_index,
-            auth=auth,
             l1_address=l1_address,
+            authorization=authorization,
+            auth=auth,
             cursor=cursor,
             filter=filter,
             _request_auth=_request_auth,
@@ -908,8 +920,9 @@ class TransactionApi:
     def _deposit_history_serialize(
         self,
         account_index,
-        auth,
         l1_address,
+        authorization,
+        auth,
         cursor,
         filter,
         _request_auth,
@@ -953,6 +966,8 @@ class TransactionApi:
             _query_params.append(('filter', filter))
             
         # process the header parameters
+        if authorization is not None:
+            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -2688,7 +2703,8 @@ class TransactionApi:
     async def withdraw_history(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
+        authorizatio: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2710,7 +2726,9 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
+        :param authorizatio:  make required after integ is done
+        :type authorizatio: str
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param cursor:
         :type cursor: str
@@ -2740,6 +2758,7 @@ class TransactionApi:
 
         _param = self._withdraw_history_serialize(
             account_index=account_index,
+            authorizatio=authorizatio,
             auth=auth,
             cursor=cursor,
             filter=filter,
@@ -2768,7 +2787,8 @@ class TransactionApi:
     async def withdraw_history_with_http_info(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
+        authorizatio: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2790,7 +2810,9 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
+        :param authorizatio:  make required after integ is done
+        :type authorizatio: str
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param cursor:
         :type cursor: str
@@ -2820,6 +2842,7 @@ class TransactionApi:
 
         _param = self._withdraw_history_serialize(
             account_index=account_index,
+            authorizatio=authorizatio,
             auth=auth,
             cursor=cursor,
             filter=filter,
@@ -2848,7 +2871,8 @@ class TransactionApi:
     async def withdraw_history_without_preload_content(
         self,
         account_index: StrictInt,
-        auth: StrictStr,
+        authorizatio: Annotated[Optional[StrictStr], Field(description=" make required after integ is done")] = None,
+        auth: Annotated[Optional[StrictStr], Field(description=" made optional to support header auth clients")] = None,
         cursor: Optional[StrictStr] = None,
         filter: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2870,7 +2894,9 @@ class TransactionApi:
 
         :param account_index: (required)
         :type account_index: int
-        :param auth: (required)
+        :param authorizatio:  make required after integ is done
+        :type authorizatio: str
+        :param auth:  made optional to support header auth clients
         :type auth: str
         :param cursor:
         :type cursor: str
@@ -2900,6 +2926,7 @@ class TransactionApi:
 
         _param = self._withdraw_history_serialize(
             account_index=account_index,
+            authorizatio=authorizatio,
             auth=auth,
             cursor=cursor,
             filter=filter,
@@ -2923,6 +2950,7 @@ class TransactionApi:
     def _withdraw_history_serialize(
         self,
         account_index,
+        authorizatio,
         auth,
         cursor,
         filter,
@@ -2963,6 +2991,8 @@ class TransactionApi:
             _query_params.append(('filter', filter))
             
         # process the header parameters
+        if authorizatio is not None:
+            _header_params['authorizatio'] = authorizatio
         # process the form parameters
         # process the body parameter
 

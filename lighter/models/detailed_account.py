@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from lighter.models.account_position import AccountPosition
 from lighter.models.public_pool_info import PublicPoolInfo
@@ -39,17 +39,17 @@ class DetailedAccount(BaseModel):
     pending_order_count: StrictInt
     status: StrictInt
     collateral: StrictStr
+    account_index: StrictInt
     name: StrictStr
     description: StrictStr
-    can_invite: StrictBool
-    referral_points_percentage: StrictStr
-    max_referral_usage_limit: Optional[StrictInt]
+    can_invite: StrictBool = Field(description=" Remove After FE uses L1 meta endpoint")
+    referral_points_percentage: StrictStr = Field(description=" Remove After FE uses L1 meta endpoint")
     positions: List[AccountPosition]
     total_asset_value: StrictStr
     pool_info: PublicPoolInfo
     shares: List[PublicPoolShare]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "pending_order_count", "status", "collateral", "name", "description", "can_invite", "referral_points_percentage", "max_referral_usage_limit", "positions", "total_asset_value", "pool_info", "shares"]
+    __properties: ClassVar[List[str]] = ["code", "message", "account_type", "index", "l1_address", "cancel_all_time", "total_order_count", "pending_order_count", "status", "collateral", "account_index", "name", "description", "can_invite", "referral_points_percentage", "positions", "total_asset_value", "pool_info", "shares"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -136,11 +136,11 @@ class DetailedAccount(BaseModel):
             "pending_order_count": obj.get("pending_order_count"),
             "status": obj.get("status"),
             "collateral": obj.get("collateral"),
+            "account_index": obj.get("account_index"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "can_invite": obj.get("can_invite"),
             "referral_points_percentage": obj.get("referral_points_percentage"),
-            "max_referral_usage_limit": obj.get("max_referral_usage_limit"),
             "positions": [AccountPosition.from_dict(_item) for _item in obj["positions"]] if obj.get("positions") is not None else None,
             "total_asset_value": obj.get("total_asset_value"),
             "pool_info": PublicPoolInfo.from_dict(obj["pool_info"]) if obj.get("pool_info") is not None else None,
