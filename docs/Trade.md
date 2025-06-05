@@ -19,6 +19,12 @@ Name | Type | Description | Notes
 **is_maker_ask** | **bool** |  | 
 **block_height** | **int** |  | 
 **timestamp** | **int** |  | 
+**taker_position_size_before** | **str** |  | 
+**taker_entry_quote_before** | **str** |  | 
+**taker_initial_margin_fraction_before** | **int** |  | 
+**maker_position_size_before** | **str** |  | 
+**maker_entry_quote_before** | **str** |  | 
+**maker_initial_margin_fraction_before** | **int** |  | 
 
 ## Example
 

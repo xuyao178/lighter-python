@@ -15,11 +15,13 @@ Name | Type | Description | Notes
 **pending_order_count** | **int** |  | 
 **status** | **int** |  | 
 **collateral** | **str** |  | 
+**account_index** | **int** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | 
+**can_invite** | **bool** |  Remove After FE uses L1 meta endpoint | 
+**referral_points_percentage** | **str** |  Remove After FE uses L1 meta endpoint | 
 **positions** | [**List[AccountPosition]**](AccountPosition.md) |  | 
 **total_asset_value** | **str** |  | 
-**market_stats** | [**List[AccountMarketStats]**](AccountMarketStats.md) |  | 
 **pool_info** | [**PublicPoolInfo**](PublicPoolInfo.md) |  | 
 **shares** | [**List[PublicPoolShare]**](PublicPoolShare.md) |  | 
 
