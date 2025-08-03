@@ -16,6 +16,7 @@ from lighter.configuration import Configuration
 from lighter.errors import ValidationError
 from lighter.models import TxHash
 from lighter import nonce_manager
+from lighter.models.resp_send_tx import RespSendTx
 from lighter.transactions import CreateOrder, CancelOrder, Withdraw
 
 logging.basicConfig(level=logging.DEBUG)
@@ -86,6 +87,10 @@ def process_api_key_and_nonce(func):
         if api_key_index == -1 and nonce == -1:
             api_key_index, nonce = self.nonce_manager.next_nonce()
         err = self.switch_api_key(api_key_index)
+        if "nonce" in kwargs:
+            del kwargs["nonce"]
+        if "api_key_index" in kwargs:
+            del kwargs["api_key_index"]
         if err != None:
             raise Exception(f"error switching api key: {err}")
 
@@ -625,7 +630,7 @@ class SignerClient:
     async def create_sub_account(self, nonce=-1):
         tx_info, error = self.sign_create_sub_account(nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Create Sub Account Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_CREATE_SUB_ACCOUNT, tx_info=tx_info)
@@ -636,7 +641,7 @@ class SignerClient:
     async def cancel_all_orders(self, time_in_force, time, nonce=-1, api_key_index=-1):
         tx_info, error = self.sign_cancel_all_orders(time_in_force, time, nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Cancel All Orders Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_CANCEL_ALL_ORDERS, tx_info=tx_info)
@@ -649,12 +654,12 @@ class SignerClient:
     ):
         tx_info, error = self.sign_modify_order(market_index, order_index, base_amount, price, trigger_price, nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Modify Order Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_MODIFY_ORDER, tx_info=tx_info)
         logging.debug(f"Modify Order Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
     @process_api_key_and_nonce
     async def transfer(self, to_account_index, usdc_amount, nonce=-1, api_key_index=-1):
@@ -662,12 +667,12 @@ class SignerClient:
 
         tx_info, error = self.sign_transfer(to_account_index, usdc_amount, nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Transfer Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_TRANSFER, tx_info=tx_info)
         logging.debug(f"Transfer Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
     @process_api_key_and_nonce
     async def create_public_pool(
@@ -677,12 +682,12 @@ class SignerClient:
             operator_fee, initial_total_shares, min_operator_share_rate, nonce
         )
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Create Public Pool Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_CREATE_PUBLIC_POOL, tx_info=tx_info)
         logging.debug(f"Create Public Pool Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
     @process_api_key_and_nonce
     async def update_public_pool(
@@ -692,36 +697,36 @@ class SignerClient:
             public_pool_index, status, operator_fee, min_operator_share_rate, nonce
         )
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Update Public Pool Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_UPDATE_PUBLIC_POOL, tx_info=tx_info)
         logging.debug(f"Update Public Pool Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
     @process_api_key_and_nonce
     async def mint_shares(self, public_pool_index, share_amount, nonce=-1, api_key_index=-1):
         tx_info, error = self.sign_mint_shares(public_pool_index, share_amount, nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Mint Shares Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_MINT_SHARES, tx_info=tx_info)
         logging.debug(f"Mint Shares Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
     @process_api_key_and_nonce
     async def burn_shares(self, public_pool_index, share_amount, nonce=-1, api_key_index=-1):
         tx_info, error = self.sign_burn_shares(public_pool_index, share_amount, nonce)
         if error is not None:
-            return None, error
+            return None, None, error
         logging.debug(f"Burn Shares Tx Info: {tx_info}")
 
         api_response = await self.send_tx(tx_type=self.TX_TYPE_BURN_SHARES, tx_info=tx_info)
         logging.debug(f"Burn Shares Send Tx Response: {api_response}")
-        return api_response, None
+        return tx_info, api_response, None
 
-    async def send_tx(self, tx_type: StrictInt, tx_info: str) -> TxHash:
+    async def send_tx(self, tx_type: StrictInt, tx_info: str) -> RespSendTx:
         if tx_info[0] != "{":
             raise Exception(tx_info)
         return await self.tx_api.send_tx(tx_type=tx_type, tx_info=tx_info)
