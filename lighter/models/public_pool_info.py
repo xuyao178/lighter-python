@@ -32,9 +32,9 @@ class PublicPoolInfo(BaseModel):
     min_operator_share_rate: StrictStr
     total_shares: StrictInt
     operator_shares: StrictInt
-    share_price_1d: Union[StrictFloat, StrictInt]
-    share_price_7d: Union[StrictFloat, StrictInt]
-    share_price_30d: Union[StrictFloat, StrictInt]
+    share_price_1d: Optional[Union[StrictFloat, StrictInt]]
+    share_price_7d: Optional[Union[StrictFloat, StrictInt]]
+    share_price_30d: Optional[Union[StrictFloat, StrictInt]]
     annual_percentage_yield: Union[StrictFloat, StrictInt]
     daily_returns: List[DailyReturn]
     additional_properties: Dict[str, Any] = {}
