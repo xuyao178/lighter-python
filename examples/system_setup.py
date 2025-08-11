@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 # It serves as a good example
 BASE_URL = "https://testnet.zklighter.elliot.ai"
 ETH_PRIVATE_KEY = "1234567812345678123456781234567812345678123456781234567812345678"
-API_KEY_INDEX = 2
+API_KEY_INDEX = 3
 
 
 async def main():
