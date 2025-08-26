@@ -7,8 +7,8 @@ logging.basicConfig(level=logging.DEBUG)
 # The API_KEY_PRIVATE_KEY provided belongs to a dummy account registered on Testnet.
 # It was generated using the setup_system.py script, and serves as an example.
 BASE_URL = "https://testnet.zklighter.elliot.ai"
-API_KEY_PRIVATE_KEY = "0xed636277f3753b6c0275f7a28c2678a7f3a95655e09deaebec15179b50c5da7f903152e50f594f7b"
-ACCOUNT_INDEX = 65
+API_KEY_PRIVATE_KEY = "0xe0fa55e11d6b5575d54c0500bd2f3b240221ae90241e3b573f2307e27de20c04ea628de3f1936e56"
+ACCOUNT_INDEX = 22
 API_KEY_INDEX = 3
 
 
@@ -24,13 +24,10 @@ async def main():
         api_key_index=API_KEY_INDEX,
     )
 
-    tx = await client.create_market_order(
-        market_index=0,
-        client_order_index=0,
-        base_amount=1000,  # 0.1 ETH
-        avg_execution_price=170000,  # $1700 -- worst acceptable price for the order
-        is_ask=True,
-    )
+    # tx = await client.create_market_order_limited_slippage(market_index=0, client_order_index=0, base_amount=30000000,
+    #                                                        max_slippage=0.001, is_ask=True)
+    tx = await client.create_market_order_if_slippage(market_index=0, client_order_index=0, base_amount=30000000,
+                                                           max_slippage=0.01, is_ask=True, ideal_price=300000)
     print("Create Order Tx:", tx)
     await client.close()
 
