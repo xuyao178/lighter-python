@@ -33,9 +33,9 @@ async def main():
     if len(response.sub_accounts) > 1:
         for sub_account in response.sub_accounts:
             print(f"found accountIndex: {sub_account.index}")
-        raise Exception(
-            f"found found multiple account indexes: {len(response.sub_accounts)}"
-        )
+
+        print("multiple accounts found, using the first one")
+        account_index = response.sub_accounts[0].index
     else:
         account_index = response.sub_accounts[0].index
 
