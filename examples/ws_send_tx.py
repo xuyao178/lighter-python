@@ -24,7 +24,7 @@ async def ws_flow(tx_type, tx_info):
                 {
                     "type": "jsonapi/sendtx",
                     "data": {
-                        "id": f"my_random_id_{12345678}",
+                        "id": f"my_random_id_{12345678}", # optional, helps id the response
                         "tx_type": tx_type,
                         "tx_info": json.loads(tx_info),
                     },
