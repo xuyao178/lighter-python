@@ -24,6 +24,7 @@ async def ws_flow(tx_types, tx_infos):
                 {
                     "type": "jsonapi/sendtxbatch",
                     "data": {
+                        "id": f"my_random_batch_id_{12345678}", # optional, helps id the response
                         "tx_types": json.dumps(tx_types),
                         "tx_infos": json.dumps(tx_infos),
                     },

@@ -11,7 +11,7 @@ API_KEY_PRIVATE_KEY = (
     "0xed636277f3753b6c0275f7a28c2678a7f3a95655e09deaebec15179b50c5da7f903152e50f594f7b"
 )
 ACCOUNT_INDEX = 65
-API_KEY_INDEX = 1
+API_KEY_INDEX = 3
 
 
 async def ws_flow(tx_type, tx_info):
@@ -24,6 +24,7 @@ async def ws_flow(tx_type, tx_info):
                 {
                     "type": "jsonapi/sendtx",
                     "data": {
+                        "id": f"my_random_id_{12345678}", # optional, helps id the response
                         "tx_type": tx_type,
                         "tx_info": json.loads(tx_info),
                     },
