@@ -155,6 +155,8 @@ class SignerClient:
     def __init__(
         self,
         url,
+        proxy,
+        proxy_headers,
         private_key,
         api_key_index,
         account_index,
@@ -185,7 +187,7 @@ class SignerClient:
         self.api_key_dict = self.build_api_key_dict(private_key, private_keys)
         self.account_index = account_index
         self.signer = _initialize_signer()
-        self.api_client = lighter.ApiClient(configuration=Configuration(host=url))
+        self.api_client = lighter.ApiClient(configuration=Configuration(host=url, proxy=proxy, proxy_headers=proxy_headers))
         self.tx_api = lighter.TransactionApi(self.api_client)
         self.order_api = lighter.OrderApi(self.api_client)
         self.nonce_manager = nonce_manager.nonce_manager_factory(

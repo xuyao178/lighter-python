@@ -83,6 +83,7 @@ conf = lighter.Configuration(
     _default = None
 
     def __init__(self, host=None,
+                 proxy=None, proxy_headers=None,
                  api_key=None, api_key_prefix=None,
                  username=None, password=None,
                  access_token=None,
@@ -187,10 +188,10 @@ conf = lighter.Configuration(
            Default values is 100, None means no-limit.
         """
 
-        self.proxy: Optional[str] = None
+        self.proxy: Optional[str] = proxy
         """Proxy URL
         """
-        self.proxy_headers = None
+        self.proxy_headers = proxy_headers
         """Proxy headers
         """
         self.safe_chars_for_path_param = ''
